@@ -1,4 +1,5 @@
 interface UserProps {
+  id?: string;
   name?: string;
   age?: number;
   [key: string]: string | number | undefined;
@@ -36,5 +37,12 @@ export class User {
     for (const callback of handlers) {
       callback();
     }
+  }
+
+  async fetch(apiUrl: string = "http://localhost:3000"): Promise<void> {
+    const response = await fetch(`${apiUrl}/users/${this.get("id")}`);
+    const userData = await response.json();
+
+    this.set(userData);
   }
 }

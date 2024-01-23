@@ -1,28 +1,10 @@
 import { User } from "./models/User";
 
-const user = new User({ name: "David", age: 37 });
+async function init() {
+  const user = new User({ id: "4ff8" });
+  await user.fetch();
 
-console.log(user.get("name"));
-console.log(user.get("age"));
+  console.log(user);
+}
 
-user.set({ name: "Perico" });
-user.set({ age: 28 });
-
-console.log(user.get("name"));
-console.log(user.get("age"));
-
-user.on("change", () => {
-  console.log("Change #1");
-});
-
-user.on("change", () => {
-  console.log("Change #2");
-});
-
-user.trigger("change");
-
-user.on("test", () => {
-  console.log(1 + 2);
-});
-
-user.trigger("test");
+init();
