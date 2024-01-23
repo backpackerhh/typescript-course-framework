@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "install-deps": "npm install",
+    "start": "npx parcel src/index.html"
+  },
+  "devDependencies": {
+    "parcel": "^2.11.0"
+  }
+}
