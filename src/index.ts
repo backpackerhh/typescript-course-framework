@@ -1,12 +1,17 @@
 import { Eventing } from "./models/Eventing";
-import { User } from "./models/User";
+import { Sync } from "./models/Sync";
+import { User, UserProps } from "./models/User";
 
 async function init() {
   const eventing = new Eventing();
-  const user = new User({ id: "4ff8" }, eventing);
-  await user.fetch();
+  const syncing = new Sync<UserProps>();
 
-  console.log(user);
+  const userId = "4ff8";
+  const user = new User({ id: userId }, eventing, syncing);
+  const userData = await user.sync.fetch(userId);
+  user.set(userData as unknown as UserProps);
+
+  console.log(user.props);
 
   user.events.on("change", () => {
     console.log("changed!");
@@ -14,11 +19,9 @@ async function init() {
 
   user.events.trigger("change");
 
-  const existingUser = new User({ id: "4f25", name: "David", age: 37 }, eventing);
-  await existingUser.save();
-
-  // const newUser = new User({ name: "Steph", age: 35 });
-  // await newUser.save();
+  const existingUserData = { id: "4f25", name: "David", age: 37 };
+  const existingUser = new User(existingUserData, eventing, syncing);
+  await existingUser.sync.save(existingUserData.id, existingUserData);
 }
 
 init();
