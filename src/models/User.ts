@@ -1,3 +1,5 @@
+import { Eventing } from "./Eventing";
+
 interface UserProps {
   id?: string;
   name?: string;
@@ -5,12 +7,8 @@ interface UserProps {
   [key: string]: string | number | undefined;
 }
 
-type Callback = () => void;
-
 export class User {
-  events: { [key: string]: Callback[] } = {};
-
-  constructor(private props: UserProps, private apiUrl: string = "http://localhost:3000") {}
+  constructor(private props: UserProps, public events: Eventing, private apiUrl: string = "http://localhost:3000") {}
 
   get(propName: string): number | string | undefined {
     return this.props[propName];
@@ -18,25 +16,6 @@ export class User {
 
   set(updatedProps: UserProps): void {
     Object.assign(this.props, updatedProps);
-  }
-
-  on(eventName: string, callback: Callback): void {
-    const handlers = this.events[eventName] || [];
-    handlers.push(callback);
-
-    this.events[eventName] = handlers;
-  }
-
-  trigger(eventName: string): void {
-    const handlers = this.events[eventName];
-
-    if (!handlers || handlers.length === 0) {
-      return;
-    }
-
-    for (const callback of handlers) {
-      callback();
-    }
   }
 
   async fetch(): Promise<void> {
