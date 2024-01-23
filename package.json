@@ -1,9 +1,11 @@
 {
   "scripts": {
     "install-deps": "npm install",
-    "start": "npx parcel src/index.html"
+    "start": "npx parcel src/index.html",
+    "start-server": "npx json-server db/data.json"
   },
   "devDependencies": {
+    "json-server": "^1.0.0-alpha.22",
     "parcel": "^2.11.0"
   }
 }
