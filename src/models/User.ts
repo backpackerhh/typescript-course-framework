@@ -10,7 +10,7 @@ type Callback = () => void;
 export class User {
   events: { [key: string]: Callback[] } = {};
 
-  constructor(private props: UserProps) {}
+  constructor(private props: UserProps, private apiUrl: string = "http://localhost:3000") {}
 
   get(propName: string): number | string | undefined {
     return this.props[propName];
@@ -39,10 +39,28 @@ export class User {
     }
   }
 
-  async fetch(apiUrl: string = "http://localhost:3000"): Promise<void> {
-    const response = await fetch(`${apiUrl}/users/${this.get("id")}`);
+  async fetch(): Promise<void> {
+    const response = await fetch(`${this.apiUrl}/users/${this.get("id")}`);
     const userData = await response.json();
 
     this.set(userData);
+  }
+
+  async save(): Promise<void> {
+    let response: Response;
+
+    if (this.get("id")) {
+      response = await fetch(`${this.apiUrl}/users/${this.get("id")}`, {
+        method: "PUT",
+        body: JSON.stringify(this.props),
+      });
+    } else {
+      response = await fetch(`${this.apiUrl}/users`, {
+        method: "POST",
+        body: JSON.stringify(this.props),
+      });
+    }
+
+    await response.json();
   }
 }
