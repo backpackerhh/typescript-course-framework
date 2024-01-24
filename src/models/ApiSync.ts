@@ -2,7 +2,7 @@ interface Identity {
   id?: string;
 }
 
-export class Sync<T extends Identity> {
+export class ApiSync<T extends Identity> {
   constructor(private apiUrl: string = "http://localhost:3000") {}
 
   async fetch(id: string): Promise<Response> {

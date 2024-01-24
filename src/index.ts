@@ -1,14 +1,7 @@
-import { Attributes } from "./models/Attributes";
-import { Eventing } from "./models/Eventing";
-import { Sync } from "./models/Sync";
-import { User, UserProps } from "./models/User";
+import { User } from "./models/User";
 
 async function init() {
-  const eventing = new Eventing();
-  const syncing = new Sync<UserProps>();
-
-  const userAttributes = new Attributes<UserProps>({ id: "4ff8" });
-  const user = new User(userAttributes, eventing, syncing);
+  const user = User.build({ id: "4ff8" });
 
   user.on("change", () => {
     console.log(`User with ID ${user.get("id")} changed!`);
@@ -16,8 +9,7 @@ async function init() {
 
   await user.fetch();
 
-  const existingUserAttributes = new Attributes<UserProps>({ id: "4f25", name: "David", age: 37 });
-  const existingUser = new User(existingUserAttributes, eventing, syncing);
+  const existingUser = User.build({ id: "4f25", name: "David", age: 37 });
 
   existingUser.on("save", () => {
     console.log(`User with ID ${existingUser.get("id")} saved!`);
@@ -25,11 +17,10 @@ async function init() {
 
   await existingUser.save();
 
-  const newUserAttributes = new Attributes<UserProps>({ name: "Perico", age: 21 });
-  const newUser = new User(newUserAttributes, eventing, syncing);
+  const newUser = User.build({ name: "Perico", age: 21 });
 
   newUser.on("save", () => {
-    console.log(`User with ID ${newUser.get("id")} saved!`);
+    console.log(`New user saved!`);
   });
 
   await newUser.save();
