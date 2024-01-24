@@ -17,13 +17,13 @@ async function init() {
 
   await existingUser.save();
 
-  const newUser = User.build({ name: "Perico", age: 21 });
+  // const newUser = User.build({ name: "Perico", age: 21 });
 
-  newUser.on("save", () => {
-    console.log(`New user saved!`);
-  });
+  // newUser.on("save", () => {
+  //   console.log(`New user saved!`);
+  // });
 
-  await newUser.save();
+  // await newUser.save();
 }
 
 init();
