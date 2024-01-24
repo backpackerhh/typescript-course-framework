@@ -24,6 +24,15 @@ async function init() {
   });
 
   await existingUser.save();
+
+  const newUserAttributes = new Attributes<UserProps>({ name: "Perico", age: 21 });
+  const newUser = new User(newUserAttributes, eventing, syncing);
+
+  newUser.on("save", () => {
+    console.log(`User with ID ${newUser.get("id")} saved!`);
+  });
+
+  await newUser.save();
 }
 
 init();

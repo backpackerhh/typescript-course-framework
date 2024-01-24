@@ -1,4 +1,8 @@
-export class Sync<T> {
+interface Identity {
+  id?: string;
+}
+
+export class Sync<T extends Identity> {
   constructor(private apiUrl: string = "http://localhost:3000") {}
 
   async fetch(id: string): Promise<Response> {
@@ -7,11 +11,11 @@ export class Sync<T> {
     return await response.json();
   }
 
-  async save(id: string, data: T): Promise<void> {
+  async save(data: T): Promise<void> {
     let response: Response;
 
-    if (id) {
-      response = await fetch(`${this.apiUrl}/users/${id}`, {
+    if (data.id) {
+      response = await fetch(`${this.apiUrl}/users/${data.id}`, {
         method: "PUT",
         body: JSON.stringify(data),
       });

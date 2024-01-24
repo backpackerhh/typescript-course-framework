@@ -42,13 +42,7 @@ export class User {
   }
 
   async save(): Promise<void> {
-    const id = this.get("id");
-
-    if (typeof id !== "string") {
-      throw new Error("Cannot fetch user without an ID");
-    }
-
-    await this.sync.save(id, this.attributes.getAll());
+    await this.sync.save(this.attributes.getAll());
 
     this.trigger("save");
   }
