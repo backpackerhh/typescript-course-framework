@@ -7,24 +7,23 @@ async function init() {
   const eventing = new Eventing();
   const syncing = new Sync<UserProps>();
 
-  const userId = "4ff8";
-  const userAttributes = new Attributes<UserProps>({ id: userId });
+  const userAttributes = new Attributes<UserProps>({ id: "4ff8" });
   const user = new User(userAttributes, eventing, syncing);
-  const userData = await user.sync.fetch(userId);
-  user.attributes.set(userData as unknown as UserProps);
 
-  console.log(user.attributes.props);
-
-  user.events.on("change", () => {
-    console.log("changed!");
+  user.on("change", () => {
+    console.log(`User with ID ${user.get("id")} changed!`);
   });
 
-  user.events.trigger("change");
+  await user.fetch();
 
-  const existingUserData = { id: "4f25", name: "David", age: 37 };
-  const existingUserAttributes = new Attributes<UserProps>(existingUserData);
+  const existingUserAttributes = new Attributes<UserProps>({ id: "4f25", name: "David", age: 37 });
   const existingUser = new User(existingUserAttributes, eventing, syncing);
-  await existingUser.sync.save(existingUserData.id, existingUserData);
+
+  existingUser.on("save", () => {
+    console.log(`User with ID ${existingUser.get("id")} saved!`);
+  });
+
+  await existingUser.save();
 }
 
 init();
