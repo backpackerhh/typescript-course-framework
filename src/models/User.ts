@@ -1,3 +1,4 @@
+import { Attributes } from "./Attributes";
 import { Eventing } from "./Eventing";
 import { Sync } from "./Sync";
 
@@ -9,13 +10,5 @@ export interface UserProps {
 }
 
 export class User {
-  constructor(public props: UserProps, public events: Eventing, public sync: Sync<UserProps>) {}
-
-  get(propName: string): number | string | undefined {
-    return this.props[propName];
-  }
-
-  set(updatedProps: UserProps): void {
-    Object.assign(this.props, updatedProps);
-  }
+  constructor(public attributes: Attributes<UserProps>, public events: Eventing, public sync: Sync<UserProps>) {}
 }
