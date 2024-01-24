@@ -21,6 +21,7 @@ interface ModelIdentity {
 export class Model<T extends ModelIdentity> {
   constructor(private attributes: ModelAttributes<T>, private events: ModelEvents, private sync: ModelSync<T>) {}
 
+  // For short, as dependencies are being injected, could be simply -> get = this.attributes.get
   get get() {
     return this.attributes.get;
   }
