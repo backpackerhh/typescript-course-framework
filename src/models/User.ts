@@ -10,7 +10,7 @@ export interface UserProps {
 }
 
 export class User {
-  constructor(public attributes: Attributes<UserProps>, public events: Eventing, public sync: Sync<UserProps>) {}
+  constructor(private attributes: Attributes<UserProps>, private events: Eventing, private sync: Sync<UserProps>) {}
 
   get get() {
     return this.attributes.get;
