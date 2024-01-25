@@ -1,10 +1,14 @@
 import { ModelEvents } from "../models/Model";
 
 export type EventsMapper = { [key: string]: () => void };
+export type RegionsMapper = { [key: string]: string };
+export type Regions = { [key: string]: HTMLElement };
 
 // Alternative -> export abstract class View<T extends Model<K>, K>
 // From the caller -> export class UserForm extends View<User, UserProps>
 export abstract class View<T extends ModelEvents> {
+  regions: Regions = {};
+
   constructor(public parent: HTMLElement, public model: T) {
     this.bindModel();
   }
@@ -16,17 +20,17 @@ export abstract class View<T extends ModelEvents> {
     templateElement.innerHTML = this.template();
 
     this.bindEvents(templateElement.content);
+    this.mapRegions(templateElement.content);
+
+    this.onRender();
+
     this.parent.replaceChildren(templateElement.content);
   }
 
+  onRender(): void {}
+
   eventsMap(): EventsMapper {
     return {};
-  }
-
-  bindModel(): void {
-    this.model.on("change", () => {
-      this.render();
-    });
   }
 
   bindEvents(fragment: DocumentFragment): void {
@@ -38,6 +42,29 @@ export abstract class View<T extends ModelEvents> {
 
       for (const element of elements) {
         element.addEventListener(eventName, eventsMap[eventKey]);
+      }
+    }
+  }
+
+  bindModel(): void {
+    this.model.on("change", () => {
+      this.render();
+    });
+  }
+
+  regionsMap(): RegionsMapper {
+    return {};
+  }
+
+  mapRegions(fragment: DocumentFragment): void {
+    const regionsMap = this.regionsMap();
+
+    for (const regionKey in regionsMap) {
+      const selector = regionsMap[regionKey];
+      const element = fragment.querySelector(selector) as HTMLElement;
+
+      if (element) {
+        this.regions[regionKey] = element;
       }
     }
   }
