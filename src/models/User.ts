@@ -3,7 +3,7 @@ import { Attributes } from "./Attributes";
 import { Eventing } from "./Eventing";
 import { ApiSync } from "./ApiSync";
 
-interface UserProps {
+export interface UserProps {
   id?: string;
   name?: string;
   age?: number;
