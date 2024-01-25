@@ -1,12 +1,18 @@
+import { User } from "../models/User";
+
 type EventsMapper = { [key: string]: () => void };
 
 export class UserForm {
-  constructor(public parent: HTMLElement) {}
+  constructor(public parent: HTMLElement, public model: User) {}
 
   template(): string {
     return `
       <div>
         <h1>User Form</h1>
+        <ul>
+          <li>Name: ${this.model.get("name")}</li>
+          <li>Age: ${this.model.get("age")}</li>
+        </ul>
         <input type="text" />
         <button>Save</Button>
       </div>
