@@ -42,8 +42,11 @@ export class UserForm {
 
   onClickSetNameButton = (): void => {
     const input = this.parent.querySelector("input.name") as HTMLInputElement;
+    const name = input.value.trim();
 
-    this.model.set({ name: input.value });
+    if (name !== "") {
+      this.model.set({ name });
+    }
   };
 
   bindModel(): void {
