@@ -16,6 +16,14 @@ $ npm start
 
 Go to http://localhost:1234 to see the project in the browser.
 
+Run API:
+
+```bash
+$ npm run start-server
+```
+
+Go to http://localhost:3000 to see the API in the browser.
+
 ## Notes
 
 In the `tsconfig.json` file following option was defined:
