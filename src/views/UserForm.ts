@@ -9,8 +9,6 @@ export class UserForm extends View<User> {
   template(): string {
     return `
       <div>
-        <h1>User Form</h1>
-        <div id="user-details"></div>
         <p>
           <input type="text" class="name" placeholder="${this.model.get("name")}" />
           <button class="set-name">Change name</button>
