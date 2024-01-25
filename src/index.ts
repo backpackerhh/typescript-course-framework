@@ -1,6 +1,4 @@
-import { User, UserProps } from "./models/User";
-import { ModelCollection } from "./models/ModelCollection";
-import { Eventing } from "./models/Eventing";
+import { User } from "./models/User";
 
 const user = User.build({ id: "4ff8" });
 
@@ -26,11 +24,7 @@ existingUser.save();
 
 // newUser.save();
 
-const usersCollection = new ModelCollection<User, UserProps>(
-  "http://localhost:3000/users",
-  (json: UserProps) => User.build(json),
-  new Eventing()
-);
+const usersCollection = User.buildCollection("http://localhost:3000/users");
 
 usersCollection.on("change", () => {
   console.log(usersCollection);
