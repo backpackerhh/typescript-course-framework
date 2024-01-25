@@ -9,7 +9,7 @@ interface ModelSync<T> {
   save(props: T): Promise<void>;
 }
 
-interface ModelEvents {
+export interface ModelEvents {
   on(eventName: string, callback: () => void): void;
   trigger(eventName: string): void;
 }
