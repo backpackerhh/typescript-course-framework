@@ -19,7 +19,9 @@ export abstract class View<T extends ModelEvents> {
     this.parent.replaceChildren(templateElement.content);
   }
 
-  abstract eventsMap(): EventsMapper;
+  eventsMap(): EventsMapper {
+    return {};
+  }
 
   bindModel(): void {
     this.model.on("change", () => {

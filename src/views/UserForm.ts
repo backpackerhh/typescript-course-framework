@@ -10,10 +10,7 @@ export class UserForm extends View<User> {
     return `
       <div>
         <h1>User Form</h1>
-        <ul>
-          <li>Name: ${this.model.get("name")}</li>
-          <li>Age: ${this.model.get("age")}</li>
-        </ul>
+        <div id="user-details"></div>
         <p>
           <input type="text" class="name" placeholder="${this.model.get("name")}" />
           <button class="set-name">Change name</button>
