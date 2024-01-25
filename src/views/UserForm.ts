@@ -14,8 +14,14 @@ export class UserForm extends View<User> {
           <li>Name: ${this.model.get("name")}</li>
           <li>Age: ${this.model.get("age")}</li>
         </ul>
-        <p><input type="text" class="name" /> <button class="set-name">Change name</button></p>
-        <button class="set-random-age">Set random age</button>
+        <p>
+          <input type="text" class="name" placeholder="${this.model.get("name")}" />
+          <button class="set-name">Change name</button>
+        </p>
+        <p>
+          <button class="set-random-age">Set random age</button>
+          <button class="save-model">Save</button>
+        </p>
       </div>
     `;
   }
@@ -24,6 +30,7 @@ export class UserForm extends View<User> {
     return {
       "click:button.set-random-age": this.onClickSetRandomAgeButton,
       "click:button.set-name": this.onClickSetNameButton,
+      "click:button.save-model": this.onClickSaveButton,
     };
   }
 
@@ -38,5 +45,9 @@ export class UserForm extends View<User> {
     if (name !== "") {
       this.model.set({ name });
     }
+  };
+
+  onClickSaveButton = (): void => {
+    this.model.save();
   };
 }
