@@ -14,7 +14,8 @@ export class UserForm {
           <li>Age: ${this.model.get("age")}</li>
         </ul>
         <input type="text" />
-        <button>Save</Button>
+        <button>Save</button>
+        <button class="set-random-age">Set random age</button>
       </div>
     `;
   }
@@ -29,18 +30,14 @@ export class UserForm {
 
   eventsMap(): EventsMapper {
     return {
-      "click:button": this.onClickButton,
-      "mouseenter:h1": this.onMouseEnterHeader,
+      "click:button.set-random-age": this.onClickSetRandomAgeButton,
     };
   }
 
-  onClickButton(): void {
-    console.log("Click on button registered!");
-  }
-
-  onMouseEnterHeader(): void {
-    console.log("Hover on h1 registered!");
-  }
+  onClickSetRandomAgeButton = (): void => {
+    this.model.set({ age: Math.floor(Math.random() * 100) });
+    console.log(this.model.get("age"));
+  };
 
   bindEvents(fragment: DocumentFragment): void {
     const eventsMap = this.eventsMap();
