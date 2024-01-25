@@ -3,7 +3,9 @@ import { User } from "../models/User";
 type EventsMapper = { [key: string]: () => void };
 
 export class UserForm {
-  constructor(public parent: HTMLElement, public model: User) {}
+  constructor(public parent: HTMLElement, public model: User) {
+    this.bindModel();
+  }
 
   template(): string {
     return `
@@ -25,7 +27,7 @@ export class UserForm {
     templateElement.innerHTML = this.template();
 
     this.bindEvents(templateElement.content);
-    this.parent.append(templateElement.content);
+    this.parent.replaceChildren(templateElement.content);
   }
 
   eventsMap(): EventsMapper {
@@ -38,6 +40,12 @@ export class UserForm {
     this.model.set({ age: Math.floor(Math.random() * 100) });
     console.log(this.model.get("age"));
   };
+
+  bindModel(): void {
+    this.model.on("change", () => {
+      this.render();
+    });
+  }
 
   bindEvents(fragment: DocumentFragment): void {
     const eventsMap = this.eventsMap();
