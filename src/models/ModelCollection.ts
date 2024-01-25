@@ -5,7 +5,7 @@ export class ModelCollection<T, U> {
     public url: string,
     public deserialize: (json: U) => T,
     private events: Eventing,
-    private models: T[] = []
+    public models: T[] = []
   ) {}
 
   on = this.events.on;
